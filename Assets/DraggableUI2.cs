@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -19,7 +19,7 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = false; // Diðer UI elemanlarýna temas etmesine izin verir
+        canvasGroup.blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -29,6 +29,20 @@ public class DraggableUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true; // Raycast özelliðini geri aç
+        canvasGroup.blocksRaycasts = true;
+
+        if (eventData.pointerEnter != null)
+        {
+            Debug.Log("Dokunulan: " + eventData.pointerEnter.name);
+
+            if (eventData.pointerEnter.CompareTag("TrashBin"))
+            {
+                Debug.Log("Ã‡Ã¶p kutusuna atÄ±ldÄ±!");
+                TrashManager.Instance.TrashCleaned();
+                Destroy(gameObject);
+            }
+        }
+
     }
+
 }
